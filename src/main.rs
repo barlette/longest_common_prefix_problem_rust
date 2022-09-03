@@ -14,7 +14,7 @@ fn longest_common_prefix(strs: Vec<String>) -> String {
 
         while low <= high {
             let middle = (low + high) / 2;
-            if isCommonPrefix(conv_strs, middle) {
+            if isCommonPrefix(&conv_strs, &middle) {
                 low = middle + 1;
             }
             else {
@@ -26,11 +26,12 @@ fn longest_common_prefix(strs: Vec<String>) -> String {
     
 }
 
-fn isCommonPrefix(strs: Vec<&str>, len: i32) -> bool {
-    let str1: &str = &strs[0].get(0..len as usize).unwrap();
-    let mut slice_strs: Vec<&str> = [].to_vec();
-    strs[1..].clone_from_slice(&slice_strs);
-    for str in slice_strs.iter() {
+fn isCommonPrefix(strs: &Vec<&str>, len: &i32) -> bool {
+    let str1: &str = &strs[0].get(0..*len as usize).unwrap();
+    
+    //let mut slice_strs: Vec<&str> = [].to_vec();
+    // strs[1..].clone_from_slice(&slice_strs);
+    for str in &strs[1..] {
         if !str.starts_with(str1) {
             return false;
         } 
