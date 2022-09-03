@@ -1,41 +1,40 @@
-use std::{cmp, ops::Index};
+use std::cmp;
 
 fn longest_common_prefix(strs: Vec<String>) -> String {
-    if strs.is_empty() {
+    let conv_strs: Vec<&str> = strs.iter().map(|s| &**s).collect();
+    if conv_strs.is_empty() {
         return "".to_string();
-        
-        
-           
     } else {
         let mut min_len = i32::MAX;
-        for str in strs {
+        for str in conv_strs {
             min_len = cmp::min(min_len, str.len().try_into().unwrap());
         }
-        let low = 1;
-        let high =  min_len;
+        let mut low = 1;
+        let mut high =  min_len;
 
         while low <= high {
             let middle = (low + high) / 2;
-            if isCommonPrefix(strs, middle) {
+            if isCommonPrefix(conv_strs, middle) {
                 low = middle + 1;
             }
             else {
                 high = middle - 1;
-            }
-               
+            }  
         }
-
-
         return "".to_string();
     }
     
 }
 
-fn isCommonPrefix(strs: Vec<String>, len: i32) -> bool {
-    let str1 = &strs[0].index(0..len);
-    for (int i = 1; i < strs.length; i++)
-        if (!strs[i].startsWith(str1))
+fn isCommonPrefix(strs: Vec<&str>, len: i32) -> bool {
+    let str1: &str = &strs[0].get(0..len as usize).unwrap();
+    let mut slice_strs: Vec<&str> = [].to_vec();
+    strs[1..].clone_from_slice(&slice_strs);
+    for str in slice_strs.iter() {
+        if !str.starts_with(str1) {
             return false;
+        } 
+    } 
     return true;
 }
 
